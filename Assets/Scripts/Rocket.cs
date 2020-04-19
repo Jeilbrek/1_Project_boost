@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
-    Rigidbody rigidbody;
+    Rigidbody rigidBody;
+    AudioSource audioSource;
 
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rigidBody = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -21,16 +23,24 @@ public class Rocket : MonoBehaviour
     {
         if (Input.GetButton("Jump"))
         {
-            rigidbody.AddRelativeForce(Vector3.up);
+            rigidBody.AddRelativeForce(Vector3.up);
+            if (!audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
+        }
+        else
+        {
+            audioSource.Stop();
         }
 
-        if(Input.GetAxis("Horizontal") > 0)
+        if(Input.GetAxis("Horizontal") < 0)
         {
-            print("Rotating to the right");
+            transform.Rotate(Vector3.forward);
         } 
-        else if(Input.GetAxis("Horizontal") < 0)
+        else if(Input.GetAxis("Horizontal") > 0)
         {
-            print("Rotating to the left");
+            transform.Rotate(-Vector3.forward);
         }
     }
 }

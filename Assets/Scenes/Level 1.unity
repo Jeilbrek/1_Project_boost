@@ -289,13 +289,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0.07168253, y: -0, z: -0, w: 0.9974275}
-  m_LocalPosition: {x: 0, y: 2, z: -20}
+  m_LocalRotation: {x: -0.06900623, y: -0, z: -0, w: 0.9976163}
+  m_LocalPosition: {x: 0, y: 5.95, z: -25.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -8.221001, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -7.9140005, y: 0, z: 0}
 --- !u!1001 &298542299610050923
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -501,5 +501,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rocket Ship
       objectReference: {fileID: 0}
+    - target: {fileID: 7577954561153353664, guid: e14ca733afbf56d4c960d7c41cf2d9c2,
+        type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7577954561153353664, guid: e14ca733afbf56d4c960d7c41cf2d9c2,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: bb033e1752f6d5246b3771eda54f268a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e14ca733afbf56d4c960d7c41cf2d9c2, type: 3}
