@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
+    [SerializeField] float rcsThrust = 100f;
+    [SerializeField] float mainThrust = 100f;
+
     Rigidbody rigidBody;
     AudioSource audioSource;
 
@@ -16,14 +19,33 @@ public class Rocket : MonoBehaviour
 
     void Update()
     {
-        ProcessInput();
+        Thrust();
+        Rotate();
     }
 
-    private void ProcessInput()
+    private void OnCollisionEnter(Collision collision)
+    {
+        switch(collision.gameObject.tag)
+        {
+            case "Friendly":
+                print("You are okey"); // TODO remove this line
+                break;
+            case "Fuel":
+                print("This is fuel");
+                break;
+            default:
+                print("You will be dead here");
+                // kill the player
+                break;
+
+        }
+    }
+
+    private void Thrust()
     {
         if (Input.GetButton("Jump"))
         {
-            rigidBody.AddRelativeForce(Vector3.up);
+            rigidBody.AddRelativeForce(Vector3.up * mainThrust);
             if (!audioSource.isPlaying)
             {
                 audioSource.Play();
@@ -33,14 +55,23 @@ public class Rocket : MonoBehaviour
         {
             audioSource.Stop();
         }
+    }
 
-        if(Input.GetAxis("Horizontal") < 0)
+    private void Rotate()
+    {
+        rigidBody.freezeRotation = true; // take manual control of rotation
+
+        float rotationThisFrame = rcsThrust * Time.deltaTime;
+
+        if (Input.GetAxis("Horizontal") < 0)
         {
-            transform.Rotate(Vector3.forward);
-        } 
-        else if(Input.GetAxis("Horizontal") > 0)
-        {
-            transform.Rotate(-Vector3.forward);
+            transform.Rotate(Vector3.forward * rotationThisFrame);
         }
+        else if (Input.GetAxis("Horizontal") > 0)
+        {
+            transform.Rotate(-Vector3.forward * rotationThisFrame);
+        }
+
+        rigidBody.freezeRotation = false; // resume physics control of rotation
     }
 }
