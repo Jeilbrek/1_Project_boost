@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class Rocket : MonoBehaviour
     Rigidbody rigidBody;
     AudioSource audioSource;
 
+    enum State { Alive, Dying, Trascending };
+    State state = State.Alive;
+
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
@@ -19,8 +23,11 @@ public class Rocket : MonoBehaviour
 
     void Update()
     {
-        Thrust();
-        Rotate();
+        if (state != State.Dying)
+        {
+            Thrust();
+            Rotate();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -30,15 +37,27 @@ public class Rocket : MonoBehaviour
             case "Friendly":
                 print("You are okey"); // TODO remove this line
                 break;
-            case "Fuel":
-                print("This is fuel");
+            case "Finish":
+                state = State.Trascending;
+                Invoke("LoadNextLevel", 1f);
                 break;
             default:
-                print("You will be dead here");
-                // kill the player
+                state = State.Dying;
+                print("You died"); // TODO remove this line
+                Invoke("LoadFirstLevel", 1f);
                 break;
 
         }
+    }
+
+    private void LoadFirstLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void LoadNextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     private void Thrust()
